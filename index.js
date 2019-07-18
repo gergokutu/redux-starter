@@ -127,10 +127,12 @@ const reducer = (state = initialState, action = {}) => {
         { ...action.payload }
       ]
     case 'SET_DOGS':
-      // strange syntax for me but needed because the map()
+      // put a list of dog in place of initial values!
+      // strange syntax for me but needed because the map()...
+      // ...map needed because we wanted to copy (not add)...
+      // ...a list as the new state
       return action.payload.map(dog => {return {...dog}})
       
-
     default:
       return state
   }
