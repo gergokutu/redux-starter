@@ -50,31 +50,86 @@
 // // module.exports.reducer = reducer
 
 // object reducer part
+// const redux = require('redux')
+
+// const initialState = {
+//   firstName: 'Charles',
+//   lastName: 'Eamnes',
+//   age: 75
+// }
+
+// const reducer = (state = initialState, action = {}) => {
+//   switch (action.type) {
+//     case 'SET_FIRST_NAME':
+//       return {
+//         ...state,
+//         firstName: action.payload
+//       }
+//     case 'SET_LAST_NAME':
+//       return {
+//         ...state,
+//         lastName: action.payload
+//       }
+//     case 'SET_AGE':
+//       return {
+//         ...state,
+//         age: action.payload
+//       }
+
+//     default:
+//       return state
+//   }
+// }
+
+// const store = redux.createStore(reducer)
+// console.log('Initial state of the store', store.getState())
+
+// store.subscribe(() => console.log('Next state:', store.getState()))
+
+// const action = {
+//   type: 'SET_FIRST_NAME',
+//   payload: 'Alice'
+// }
+
+// store.dispatch(action)
+
+// const action2 = {
+//   type: 'SET_LAST_NAME',
+//   payload: 'Bob'
+// }
+
+// store.dispatch(action2)
+
+// const action3 = {
+//   type: 'SET_AGE',
+//   payload: '12345'
+// }
+
+// store.dispatch(action3)
+
+// module.exports = { reducer }
+
+// array reducer part
 const redux = require('redux')
 
-const initialState = {
-  firstName: 'Charles',
-  lastName: 'Eamnes',
-  age: 75
-}
+const initialState = [
+  {
+    name: 'First dog',
+    isAGoodBoy: true
+  }
+]
 
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    case 'SET_FIRST_NAME':
-      return {
+    case 'ADD_DOG':
+      return [
         ...state,
-        firstName: action.payload
-      }
-    case 'SET_LAST_NAME':
-      return {
-        ...state,
-        lastName: action.payload
-      }
-    case 'SET_AGE':
-      return {
-        ...state,
-        age: action.payload
-      }
+        { ...action.payload }
+      ]
+    case 'SET_DOGS':
+      // strange syntax for me but needed because the map()
+      return action.payload.map(dog => {return {...dog}})
+      
 
     default:
       return state
@@ -87,24 +142,29 @@ console.log('Initial state of the store', store.getState())
 store.subscribe(() => console.log('Next state:', store.getState()))
 
 const action = {
-  type: 'SET_FIRST_NAME',
-  payload: 'Alice'
+  type: 'ADD_DOG',
+  payload: {
+    name: 'Second dog',
+    isAGoodBoy: false
+  }
 }
 
 store.dispatch(action)
 
 const action2 = {
-  type: 'SET_LAST_NAME',
-  payload: 'Bob'
+  type: 'SET_DOGS',
+  payload: [
+    {
+      name: 'The new Dog in town',
+      isAGoodBoy: true
+    },
+    {
+      name: 'Snoop Dog',
+      isAGoodBoy: true
+    }
+  ]
 }
 
 store.dispatch(action2)
-
-const action3 = {
-  type: 'SET_AGE',
-  payload: '12345'
-}
-
-store.dispatch(action3)
 
 module.exports = { reducer }
